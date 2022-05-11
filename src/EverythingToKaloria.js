@@ -14,31 +14,29 @@ class EverytoKaloria extends Component {
 
     this.state = {
       adatok: [],
+      ertek: 0
     };
+
   }
 
-  foodEnergy = (e) => {
-    let ertek = e.target.value;
+  FoodToCalorie = (e) => {
+   
 
-    this.setValue(this.protein.current, ertek / 4 + " g");
-    this.setValue(this.carbs.current, ertek / 4 + " g");
-    this.setValue(this.fat.current, ertek / 9 + " g");
-    this.setValue(this.sugar.current, ertek / 4 + " g");
     let adatok = [
-      this.calories.current.value,
-      this.protein.current.value,
-      this.carbs.current.value,
-      this.fat.current.value,
-      this.sugar.current.value,
+      
+      this.protein.current.value * 4,
+      this.carbs.current.value *4,
+      this.fat.current.value*9,
+      this.sugar.current.value*4,
     ];
-    this.setState({
-      adatok: adatok,
-    });
+
+
+    let value = 0;
+    adatok.forEach(adat=> value += adat);
+    this.calories.current.value = value +" calories"
   };
 
-  setValue(ref, value) {
-    ref.value = value;
-  }
+  
 
   render() {
     return (
@@ -58,7 +56,7 @@ class EverytoKaloria extends Component {
               ></Image>
               <FormControl
                 type="number"
-              
+                onChange={(e)=>{this.FoodToCalorie(e)}}
                 id="protein"
                 ref={this.protein}
                 placeholder="Protein"
@@ -79,7 +77,7 @@ class EverytoKaloria extends Component {
                 src={"kepek/carb.png"}
               ></Image>
               <FormControl
-               
+                onChange={(e)=>{this.FoodToCalorie(e)}}
                 ref={this.carbs}
                 type="number"
                 id="carbs"
@@ -101,7 +99,7 @@ class EverytoKaloria extends Component {
                 src={"kepek/trans-fats-free.png"}
               ></Image>
               <FormControl
-                
+                 onChange={(e)=>{this.FoodToCalorie(e)}}
                 ref={this.fat}
                 type="number"
                 id="fat"
@@ -123,7 +121,7 @@ class EverytoKaloria extends Component {
                 src={"kepek/sugar-cube.png"}
               ></Image>
               <FormControl
-                
+                 onChange={(e)=>{this.FoodToCalorie(e)}}
                 ref={this.sugar}
                 type="number"
                 id="sugar"
@@ -146,7 +144,7 @@ class EverytoKaloria extends Component {
               ></Image>
               <FormControl
                 ref={this.calories}
-                type="number"
+                type="text"
                 id="calories"
                 disabled
                 
