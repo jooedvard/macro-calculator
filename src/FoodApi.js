@@ -7,11 +7,11 @@ class FoodApi extends Component {
   constructor(props) {
     super(props);
 
-    this.apiKey = "326a6546f2504be7838863ae66b5e34e";
     this.state = {
       optionResults: [],
-      recipes: [],
+      recipes: this.props.recipies,
       categories: [],
+    
     };
     this.recipesList = React.createRef();
   }
@@ -25,7 +25,6 @@ class FoodApi extends Component {
       method: "get",
       url: "https://www.themealdb.com/api/json/v1/1/categories.php",
     }).then((response) => {
-      console.log(response);
       if (response.data.meals === null) {
         this.setState({ categories: [] });
       } else {
@@ -35,22 +34,29 @@ class FoodApi extends Component {
   };
 
   searchFood = (keyword) => {
-    axios({
-      method: "get",
-      url: "https://www.themealdb.com/api/json/v1/1/search.php?s=" + keyword,
-    }).then((response) => {
-      if (response.data.meals === null) {
-        this.setState({ recipes: [] });
-      } else {
-        this.setState({ recipes: response.data.meals });
-      }
-    });
+    if (keyword === "") {
+      this.setState({ recipes: [] });
+    }else{
+      axios({
+        method: "get",
+        url: "https://www.themealdb.com/api/json/v1/1/search.php?s=" + keyword,
+      }).then((response) => {
+        if (response.data.meals === null) {
+          this.setState({ recipes: [] });
+        } else {
+          this.setState({ recipes: response.data.meals });
+        }
+      });
+    }
+    
   };
 
   onChange = (e) => {
     let keyword = e.target.value;
+    this.props.change();
     if (keyword === "") {
       this.setState({ recipes: [] });
+
     } else {
       this.searchFood(keyword);
     }
@@ -72,32 +78,60 @@ class FoodApi extends Component {
             </Col>
           </Row>
           <Row>
-          <Col>
-          <h3 className="mt-3">Categories</h3>
-            <div className="categories">
-              {this.state.categories.map((category,index) => {
-                return <div key={category.strCategory}><img  src={category.strCategoryThumb} className="category"></img><p className="text">{category.strCategory}</p></div>;
-              })}
-            </div>
-          </Col>
+            <Col>
+              <h3 className="mt-3">Categories</h3>
+              <div className="categories">
+                {this.state.categories.map((category, index) => {
+                  return (
+                    <div key={category.strCategory}>
+                      <img
+                        src={category.strCategoryThumb}
+                        className="category"
+                      ></img>
+                      <p className="text">{category.strCategory}</p>
+                    </div>
+                  );
+                })}
+              </div>
+            </Col>
           </Row>
           <Row className="mt-3 carousel">
             <Col>
               <div className="recipies-grid">
-                {this.state.recipes.map((recipe, index) => {
-                  return (
-                    <div key={index} className="recipe">
-                      <img className="card-img" src={recipe.strMealThumb}></img>
-                      <div className="caption">
-                        <h4 className="text">{recipe.strMeal}</h4>
-                        <a className="link" href={recipe.strSource}>
-                          {"link"}
-                        </a>
-                        <p className="area">{recipe.strArea}</p>
-                      </div>
-                    </div>
-                  );
-                })}
+                {!this.props.recipesFromProps
+                  ? this.state.recipes.map((recipe, index) => {
+                      return (
+                        <div key={index} className="recipe">
+                          <img
+                            className="card-img"
+                            src={recipe.strMealThumb}
+                          ></img>
+                          <div className="caption">
+                            <h4 className="text">{recipe.strMeal}</h4>
+                            <a className="link" href={recipe.strSource}>
+                              {"link"}
+                            </a>
+                            <p className="area">{recipe.strArea}</p>
+                          </div>
+                        </div>
+                      );
+                    })
+                  : this.props.recipies.map((recipe, index) => {
+                      return (
+                        <div key={index} className="recipe">
+                          <img
+                            className="card-img"
+                            src={recipe.strMealThumb}
+                          ></img>
+                          <div className="caption">
+                            <h4 className="text">{recipe.strMeal}</h4>
+                            <a className="link" href={recipe.strSource}>
+                              {"link"}
+                            </a>
+                          </div>
+                        </div>
+                      );
+                    })}
               </div>
             </Col>
           </Row>

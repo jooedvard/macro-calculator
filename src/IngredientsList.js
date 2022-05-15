@@ -16,6 +16,8 @@ class IngredientsList extends Component {
     });
   }
 
+
+
   render() {
     return (
       <div className="ingredients">
@@ -27,6 +29,8 @@ class IngredientsList extends Component {
               <Ingredient
                 key={ingredient.strIngredient}
                 name={ingredient.strIngredient}
+                id={ingredient.idIngredient}
+                choose={this.props.choose}
               ></Ingredient>
             );
           })}
