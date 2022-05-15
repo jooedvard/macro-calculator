@@ -42,7 +42,8 @@ class KaloriaToEverything extends Component {
 
   render() {
     return (
-      <Container className="mt-3">
+      <Container className="mt-1">
+        <h3 className="p-3">{this.props.title}</h3>
         <Container  className="mb-3">
           <Row>
             <Col className="d-flex">

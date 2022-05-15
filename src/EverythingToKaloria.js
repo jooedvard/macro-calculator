@@ -14,40 +14,33 @@ class EverytoKaloria extends Component {
 
     this.state = {
       adatok: [],
-      ertek: 0
+      ertek: 0,
     };
-
   }
 
   FoodToCalorie = (e) => {
-   
-
     let adatok = [
-      
       this.protein.current.value * 4,
-      this.carbs.current.value *4,
-      this.fat.current.value*9,
-      this.sugar.current.value*4,
+      this.carbs.current.value * 4,
+      this.fat.current.value * 9,
+      this.sugar.current.value * 4,
     ];
 
-
     let value = 0;
-    adatok.forEach(adat=> value += adat);
-    this.calories.current.value = value +" calories"
+    adatok.forEach((adat) => (value += adat));
+    this.calories.current.value = value + " calories";
   };
-
-  
 
   render() {
     return (
-      <Container className="mt-3">
-    
+      <Container className="mt-5">
+        <h3 className="p-3">{this.props.title}</h3>
 
         <Container>
           <Row>
             <Col className="d-flex">
               <Image
-              className="p-2"
+                className="p-2"
                 thumbnail
                 fluid
                 width={"50px"}
@@ -56,7 +49,9 @@ class EverytoKaloria extends Component {
               ></Image>
               <FormControl
                 type="number"
-                onChange={(e)=>{this.FoodToCalorie(e)}}
+                onChange={(e) => {
+                  this.FoodToCalorie(e);
+                }}
                 id="protein"
                 ref={this.protein}
                 placeholder="Protein"
@@ -69,7 +64,7 @@ class EverytoKaloria extends Component {
           <Row>
             <Col className="d-flex">
               <Image
-              className="p-2"
+                className="p-2"
                 thumbnail
                 fluid
                 width={"50px"}
@@ -77,7 +72,9 @@ class EverytoKaloria extends Component {
                 src={"kepek/carb.png"}
               ></Image>
               <FormControl
-                onChange={(e)=>{this.FoodToCalorie(e)}}
+                onChange={(e) => {
+                  this.FoodToCalorie(e);
+                }}
                 ref={this.carbs}
                 type="number"
                 id="carbs"
@@ -91,7 +88,7 @@ class EverytoKaloria extends Component {
           <Row>
             <Col className="d-flex">
               <Image
-              className="p-2"
+                className="p-2"
                 thumbnail
                 fluid
                 width={"50px"}
@@ -99,7 +96,9 @@ class EverytoKaloria extends Component {
                 src={"kepek/trans-fats-free.png"}
               ></Image>
               <FormControl
-                 onChange={(e)=>{this.FoodToCalorie(e)}}
+                onChange={(e) => {
+                  this.FoodToCalorie(e);
+                }}
                 ref={this.fat}
                 type="number"
                 id="fat"
@@ -113,7 +112,7 @@ class EverytoKaloria extends Component {
           <Row>
             <Col className="d-flex">
               <Image
-              className="p-2"
+                className="p-2"
                 thumbnail
                 fluid
                 width={"50px"}
@@ -121,7 +120,9 @@ class EverytoKaloria extends Component {
                 src={"kepek/sugar-cube.png"}
               ></Image>
               <FormControl
-                 onChange={(e)=>{this.FoodToCalorie(e)}}
+                onChange={(e) => {
+                  this.FoodToCalorie(e);
+                }}
                 ref={this.sugar}
                 type="number"
                 id="sugar"
@@ -131,11 +132,11 @@ class EverytoKaloria extends Component {
           </Row>
         </Container>
 
-        <Container  className="mb-3">
+        <Container className="mb-3">
           <Row>
             <Col className="d-flex">
-            <Image
-            className="p-2"
+              <Image
+                className="p-2"
                 thumbnail
                 fluid
                 width={"50px"}
@@ -147,7 +148,6 @@ class EverytoKaloria extends Component {
                 type="text"
                 id="calories"
                 disabled
-                
               ></FormControl>
             </Col>
           </Row>
