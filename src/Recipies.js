@@ -12,29 +12,32 @@ class Recipies extends Component {
     this.state = {
       recipies: [],
       recipesFromProps: false,
-      randomfood:[],
+      randomfood: [],
       categories: [],
-      rndFoodCategory:""
+      rndFoodCategory: "",
+      rndFoodIngredients: [],
     };
   }
 
-  componentDidMount(){
-  
+  componentDidMount() {
     this.foodCategories();
-    this.getRandomFood();
   }
 
   foodCategories = () => {
     axios({
       method: "get",
       url: "https://www.themealdb.com/api/json/v1/1/categories.php",
-    }).then((response) => {
-      if (response.data.meals === null) {
-        this.setState({ categories: [] });
-      } else {
-        this.setState({ categories: response.data.categories });
-      }
-    });
+    })
+      .then((response) => {
+        if (response.data.meals === null) {
+          this.setState({ categories: [] });
+        } else {
+          this.setState({ categories: response.data.categories });
+        }
+      })
+      .then(() => {
+        this.getRandomFood();
+      });
   };
 
   IngredientsClick = (ingredient) => {
@@ -61,9 +64,39 @@ class Recipies extends Component {
       url: "https://www.themealdb.com/api/json/v1/1/random.php",
       method: "get",
     }).then((response) => {
-     
-      
-      this.setState({randomfood: response.data.meals[0],rndFoodCategory:response.data.meals[0].strCategory})
+      let ingredients = [];
+      let measures = [];
+      for (const key in response.data.meals[0]) {
+        if (Object.hasOwnProperty.call(response.data.meals[0], key)) {
+          let obj = { ingredient: "", measure: "" };
+          if (
+            key.includes("Ingredient") &&
+            response.data.meals[0][key] !== null &&
+            response.data.meals[0][key] != ""
+          ) {
+            const element = response.data.meals[0][key];
+
+            ingredients.push(element);
+          }
+          if (
+            key.includes("Measure") &&
+            response.data.meals[0][key] !== null &&
+            response.data.meals[0][key] != "" &&
+            response.data.meals[0][key] != " "
+          ) {
+            const element = response.data.meals[0][key];
+
+            measures.push(element);
+          }
+        }
+      }
+      console.log(ingredients);
+      this.setState({
+        randomfood: response.data.meals[0],
+        rndFoodCategory: response.data.meals[0].strCategory,
+        rndFoodIngredients: ingredients,
+        rndFoodMeasures : measures
+      });
     });
   }
 
@@ -87,9 +120,14 @@ class Recipies extends Component {
             this.IngredientsClick(ingredient);
           }}
         ></IngredientsList>
-        
+
         <EverytoKaloria title={"How many calories?"} />
-        <RandomRecipe meal={this.state.randomfood} category={this.state.rndFoodCategory}></RandomRecipe>
+        <RandomRecipe
+          meal={this.state.randomfood}
+          category={this.state.rndFoodCategory}
+          ingredients={this.state.rndFoodIngredients}
+          measures={this.state.rndFoodMeasures}
+        ></RandomRecipe>
       </div>
     );
   }
