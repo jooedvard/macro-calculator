@@ -17,7 +17,7 @@ class RandomRecipe extends Component {
         <ul className="mt-5 randomfood-ingredients">
     
             {this.props.ingredients.map((ingredient,index)=>{
-                return <li key={ingredient+index} className="ingredients-measures"><span>{ingredient}</span><span> {this.props.measures[index]}</span></li>
+                return <li key={ingredient+index} className="ingredients-measures"><span>{ingredient}</span><span className="measures"> {this.props.measures[index]}</span></li>
             })}
         </ul>
         <div>

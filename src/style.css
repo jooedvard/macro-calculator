@@ -66,8 +66,7 @@ body {
   list-style-type: none;
   width: fit-content;
   display: flex;
-  justify-content: start;
-  align-items: center;
+
   padding: 0.5rem;
   gap: 1rem;
   cursor: pointer;
@@ -80,11 +79,11 @@ body {
 }
 .ingredients {
   position: absolute;
-  width: calc(min-content+50px);
+  max-width: 250px;
   left: 0;
   top: 0;
   background-color: white;
-  width: min-content;
+  width: fit-content;
   height: 100vh;
   overflow-y: scroll;
   padding-left: 0 !important;
@@ -161,4 +160,7 @@ list-style-type: none;
   margin-top: 1rem;
   padding-left: 2rem;
   padding-right: 2rem;
+}
+.measures{
+  font-style: italic;
 }
