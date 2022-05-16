@@ -1,6 +1,13 @@
 import React, { Component } from "react";
-import { FormControl, Container, Col, Row, FormSelect } from "react-bootstrap";
-import "../src/style.css";
+import {
+  FormControl,
+  Container,
+  Col,
+  Row,
+  Dropdown,
+  DropdownButton,
+  InputGroup,
+} from "react-bootstrap";
 import axios from "axios";
 
 class FoodApi extends Component {
@@ -9,34 +16,15 @@ class FoodApi extends Component {
 
     this.state = {
       optionResults: [],
-      recipes: this.props.recipies,
-      categories: [],
-    
+      recipes: [],
     };
     this.recipesList = React.createRef();
   }
 
-  componentDidMount() {
-    this.foodCategories();
-  }
-
-  foodCategories = () => {
-    axios({
-      method: "get",
-      url: "https://www.themealdb.com/api/json/v1/1/categories.php",
-    }).then((response) => {
-      if (response.data.meals === null) {
-        this.setState({ categories: [] });
-      } else {
-        this.setState({ categories: response.data.categories });
-      }
-    });
-  };
-
   searchFood = (keyword) => {
     if (keyword === "") {
       this.setState({ recipes: [] });
-    }else{
+    } else {
       axios({
         method: "get",
         url: "https://www.themealdb.com/api/json/v1/1/search.php?s=" + keyword,
@@ -48,7 +36,6 @@ class FoodApi extends Component {
         }
       });
     }
-    
   };
 
   onChange = (e) => {
@@ -56,7 +43,6 @@ class FoodApi extends Component {
     this.props.change();
     if (keyword === "") {
       this.setState({ recipes: [] });
-
     } else {
       this.searchFood(keyword);
     }
@@ -64,38 +50,46 @@ class FoodApi extends Component {
 
   render() {
     return (
-      <Container className="p-4">
+      <Container className="mt-3" >
         <Row>
-          <Row>
-            <Col>
+          <Row className="nav m-2">
+            <Col >
               <FormControl
                 type="search"
+                className="search"
                 placeholder="Search any food..."
                 onChange={(e) => {
                   this.onChange(e);
                 }}
+                
+                onFocus={() => {
+                  this.props.change();
+                }}
               ></FormControl>
             </Col>
-          </Row>
-          <Row>
-            <Col>
-              <h3 className="mt-3">Categories</h3>
-              <div className="categories">
-                {this.state.categories.map((category, index) => {
-                  return (
-                    <div key={category.strCategory}>
-                      <img
-                        src={category.strCategoryThumb}
-                        className="category"
-                      ></img>
-                      <p className="text">{category.strCategory}</p>
-                    </div>
-                  );
-                })}
-              </div>
+            <Col className="w-100">
+                
+              
+                <DropdownButton
+                  variant="outline-secondary"
+                  title="Categories"
+
+                >
+                  {this.props.categories.map((category, index) => {
+                    return (
+                      <Dropdown.Item key={category.strCategory}>
+                        <img src={category.strCategoryThumb} className="category"/>
+                        <span></span>
+                        {category.strCategory}
+                      </Dropdown.Item>
+                    );
+                  })}
+                </DropdownButton>
+            
             </Col>
           </Row>
-          <Row className="mt-3 carousel">
+          
+          <Row className="mt-3 ">
             <Col>
               <div className="recipies-grid">
                 {!this.props.recipesFromProps
@@ -108,10 +102,12 @@ class FoodApi extends Component {
                           ></img>
                           <div className="caption">
                             <h4 className="text">{recipe.strMeal}</h4>
+                            <div className="link-area">
                             <a className="link" href={recipe.strSource}>
-                              {"link"}
+                              {"Cook"}
                             </a>
                             <p className="area">{recipe.strArea}</p>
+                            </div>
                           </div>
                         </div>
                       );
@@ -125,9 +121,12 @@ class FoodApi extends Component {
                           ></img>
                           <div className="caption">
                             <h4 className="text">{recipe.strMeal}</h4>
+                            <div className="link-area">
                             <a className="link" href={recipe.strSource}>
-                              {"link"}
+                              {"Cook"}
                             </a>
+                            <p className="area">{recipe.strArea}</p>
+                            </div>
                           </div>
                         </div>
                       );
