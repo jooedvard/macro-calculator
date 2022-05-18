@@ -40,6 +40,14 @@ class FoodApi extends Component {
     }
   };
 
+  getCategory = (category) => {
+    //www.themealdb.com/api/json/v1/1/filter.php?c=Seafood
+    axios({
+      method:"get",
+      url:"https://www.themealdb.com/api/json/v1/1/filter.php?c="+category
+    }).then((response)=>{  this.setState({ recipes: response.data.meals }) } );
+  }
+
   onChange = (e) => {
     let keyword = e.target.value;
     this.props.change();
@@ -75,7 +83,9 @@ class FoodApi extends Component {
             >
               {this.props.categories.map((category, index) => {
                 return (
-                  <Dropdown.Item key={category.strCategory}>
+                  <Dropdown.Item key={category.strCategory} onClick={()=>{
+                     this.getCategory(category.strCategory)
+                  }}>
                     <img src={category.strCategoryThumb} className="category" />
                     <span></span>
                     {category.strCategory}
