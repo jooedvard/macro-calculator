@@ -9,7 +9,9 @@ class RandomRecipe extends Component {
   state = {};
   render() {
     return (
+
       <div className="randomfood">
+        <button className="new-random-fodd" onClick={()=>{this.props.new()}}>New</button>
         <h4>What should I eat today?</h4>
         <img src={this.props.meal.strMealThumb} />
         <p className="randomfood-name">{this.props.meal.strMeal}</p>

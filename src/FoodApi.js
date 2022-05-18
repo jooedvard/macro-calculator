@@ -8,6 +8,8 @@ import {
   DropdownButton,
   InputGroup,
 } from "react-bootstrap";
+import Recipe from "./Recipe";
+import EverytoKaloria from "./EverythingToKaloria";
 import axios from "axios";
 
 class FoodApi extends Component {
@@ -50,92 +52,60 @@ class FoodApi extends Component {
 
   render() {
     return (
-      <Container className="mt-3" >
-        <Row>
-          <Row className="nav m-2">
-            <Col >
-              <FormControl
-                type="search"
-                className="search"
-                placeholder="Search any food..."
-                onChange={(e) => {
-                  this.onChange(e);
-                }}
-                
-                onFocus={() => {
-                  this.props.change();
-                }}
-              ></FormControl>
-            </Col>
-            <Col className="w-100">
-                
-              
-                <DropdownButton
-                  variant="outline-secondary"
-                  title="Categories"
+      <div className="main">
+      
+        <div className="main-nav">
+          <div className="search-drop">
+            <FormControl
+              type="search"
+              className="search"
+              placeholder="Search any food..."
+              onChange={(e) => {
+                this.onChange(e);
+              }}
+              onFocus={() => {
+                this.props.change();
+              }}
+            ></FormControl>
 
-                >
-                  {this.props.categories.map((category, index) => {
-                    return (
-                      <Dropdown.Item key={category.strCategory}>
-                        <img src={category.strCategoryThumb} className="category"/>
-                        <span></span>
-                        {category.strCategory}
-                      </Dropdown.Item>
-                    );
-                  })}
-                </DropdownButton>
-            
-            </Col>
-          </Row>
-          
-          <Row className="mt-3 ">
-            <Col>
-              <div className="recipies-grid">
-                {!this.props.recipesFromProps
-                  ? this.state.recipes.map((recipe, index) => {
-                      return (
-                        <div key={index} className="recipe">
-                          <img
-                            className="card-img"
-                            src={recipe.strMealThumb}
-                          ></img>
-                          <div className="caption">
-                            <h4 className="text">{recipe.strMeal}</h4>
-                            <div className="link-area">
-                            <a className="link" href={recipe.strSource}>
-                              {"Cook"}
-                            </a>
-                            <p className="area">{recipe.strArea}</p>
-                            </div>
-                          </div>
-                        </div>
-                      );
-                    })
-                  : this.props.recipies.map((recipe, index) => {
-                      return (
-                        <div key={index} className="recipe">
-                          <img
-                            className="card-img"
-                            src={recipe.strMealThumb}
-                          ></img>
-                          <div className="caption">
-                            <h4 className="text">{recipe.strMeal}</h4>
-                            <div className="link-area">
-                            <a className="link" href={recipe.strSource}>
-                              {"Cook"}
-                            </a>
-                            <p className="area">{recipe.strArea}</p>
-                            </div>
-                          </div>
-                        </div>
-                      );
-                    })}
-              </div>
-            </Col>
-          </Row>
-        </Row>
-      </Container>
+            <DropdownButton
+              className="drop"
+              variant="outline-secondary"
+              title="Categories"
+            >
+              {this.props.categories.map((category, index) => {
+                return (
+                  <Dropdown.Item key={category.strCategory}>
+                    <img src={category.strCategoryThumb} className="category" />
+                    <span></span>
+                    {category.strCategory}
+                  </Dropdown.Item>
+                );
+              })}
+            </DropdownButton>
+          </div>
+
+          <EverytoKaloria title={"How many calories?"} />
+        </div>
+        <div className="error badge badge-primary bg-danger">No recipe found!</div>
+        <div className="recipies-grid">
+          {!this.props.recipesFromProps
+            ? this.state.recipes.map((recipe, index) => {
+                return (
+                  <Recipe index={index} recipe={recipe}>
+                    kkkk
+                  </Recipe>
+                );
+              })
+            : this.props.recipies.map((recipe, index) => {
+                return (
+                  <Recipe index={index} recipe={recipe}>
+                    kkkk
+                  </Recipe>
+                );
+              })}
+        </div>
+      </div>
     );
   }
 }

@@ -1,7 +1,7 @@
 .app {
   height: 100vh;
-  overflow-y: scroll;
   width: 100%;
+  overflow: hidden;
 }
 body {
   background-color: rgb(238, 238, 238);
@@ -14,6 +14,10 @@ body {
   gap: 1rem;
   margin-top: 1rem;
   padding-right: 1rem;
+  height: 100vh;
+  overflow: scroll;
+  padding-right: 17px; /* Increase/decrease this value for cross-browser compatibility */
+  box-sizing: content-box; /* So the width will be 100% + 17px */
 }
 .card-img {
   width: 300px;
@@ -23,7 +27,7 @@ body {
   display: block;
 }
 .recipe:hover {
-  background-color: rgb(187, 214, 238);
+  background-color: ghostwhite;
   cursor: pointer;
 }
 .recipe {
@@ -63,14 +67,21 @@ body {
   font-weight: 500;
 }
 .ingredient {
+
   list-style-type: none;
   width: fit-content;
   display: flex;
-
+  transition: ease-in-out .2;
   padding: 0.5rem;
+  padding-left: 1rem;
   gap: 1rem;
   cursor: pointer;
   width: 100%;
+  display: flex;
+  align-items: center;
+}
+.ingredient:hover {
+  background-color: ghostwhite;
 }
 
 .ingredient img {
@@ -78,10 +89,6 @@ body {
   height: 50px;
 }
 .ingredients {
-  position: absolute;
-  max-width: 250px;
-  left: 0;
-  top: 0;
   background-color: white;
   width: fit-content;
   height: 100vh;
@@ -98,11 +105,6 @@ body {
 }
 
 .randomfood {
-  position: absolute;
-  right: 0;
-  top: 0;
-  width: calc(min-content+50px);
-  max-width: 300px;
   height: 100vh;
   overflow-y: scroll;
   background-color: white;
@@ -110,6 +112,8 @@ body {
   flex-direction: column;
   align-items: center;
   box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;
+  max-width: 300px;
+  min-width: 300px;
 }
 .randomfood h4 {
   font-weight: 400;
@@ -139,7 +143,7 @@ body {
   font-weight: bold;
 }
 .randomfood-ingredients {
-list-style-type: none;
+  list-style-type: none;
 }
 .link-area {
   display: flex;
@@ -161,6 +165,58 @@ list-style-type: none;
   padding-left: 2rem;
   padding-right: 2rem;
 }
-.measures{
+.measures {
   font-style: italic;
+}
+
+.search-i {
+  margin: auto;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 1px solid gainsboro;
+  width: 100%;
+  text-align: center;
+  padding: 0.5rem;
+  outline: none;
+  margin-bottom: 1rem;
+}
+.new-random-fodd {
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+  border: none;
+  min-width: 100px;
+  margin-left: auto;
+  margin-right: 1rem;
+  border-radius: 5px;
+  background-color: rgb(139, 231, 1);
+  font-weight: 500;
+}
+.caloricounter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  margin: 0;
+  margin-bottom: 2rem;
+}
+.site {
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  overflow: hidden;
+}
+.search-drop {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.error {
+  visibility: hidden;
+  text-align: center;
+  margin: auto;
+  display: flex;
+  width: fit-content;
+  font-size: 1.1rem;
 }

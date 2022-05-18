@@ -33,8 +33,8 @@ class EverytoKaloria extends Component {
 
   render() {
     return (
-      <Container className="mt-5">
-        <h3 className="p-3">{this.props.title}</h3>
+      <div className="mt-4 caloricounter">
+        
 
         <Container>
           <Row>
@@ -132,7 +132,7 @@ class EverytoKaloria extends Component {
           </Row>
         </Container>
 
-        <Container className="mb-3">
+        <Container className="">
           <Row>
             <Col className="d-flex">
               <Image
@@ -152,7 +152,7 @@ class EverytoKaloria extends Component {
             </Col>
           </Row>
         </Container>
-      </Container>
+      </div>
     );
   }
 }

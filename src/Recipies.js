@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import FoodApi from "./FoodApi";
 import IngredientsList from "./IngredientsList";
-import KaloriaToEverything from "./KaloriaToEverything";
-import EverytoKaloria from "./EverythingToKaloria";
 import axios from "axios";
 import RandomRecipe from "./RandomRecipe";
 
@@ -59,7 +57,7 @@ class Recipies extends Component {
     });
   };
 
-  getRandomFood() {
+  getRandomFood = () => {
     axios({
       url: "https://www.themealdb.com/api/json/v1/1/random.php",
       method: "get",
@@ -90,15 +88,14 @@ class Recipies extends Component {
           }
         }
       }
-      console.log(ingredients);
       this.setState({
         randomfood: response.data.meals[0],
         rndFoodCategory: response.data.meals[0].strCategory,
         rndFoodIngredients: ingredients,
-        rndFoodMeasures : measures
+        rndFoodMeasures: measures,
       });
     });
-  }
+  };
 
   setRecipesFromProps = (value) => {
     this.setState({ recipesFromProps: value });
@@ -106,7 +103,13 @@ class Recipies extends Component {
 
   render() {
     return (
-      <div>
+      <div className="site">
+        <IngredientsList
+          choose={(ingredient) => {
+            this.IngredientsClick(ingredient);
+          }}
+        ></IngredientsList>
+
         <FoodApi
           recipies={this.state.recipies}
           recipesFromProps={this.state.recipesFromProps}
@@ -115,14 +118,8 @@ class Recipies extends Component {
             this.setRecipesFromProps(false);
           }}
         ></FoodApi>
-        <IngredientsList
-          choose={(ingredient) => {
-            this.IngredientsClick(ingredient);
-          }}
-        ></IngredientsList>
-
-        <EverytoKaloria title={"How many calories?"} />
         <RandomRecipe
+          new={this.getRandomFood}
           meal={this.state.randomfood}
           category={this.state.rndFoodCategory}
           ingredients={this.state.rndFoodIngredients}
